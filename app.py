@@ -1,14 +1,20 @@
 import streamlit as st
 
-# Tiêu đề ứng dụng
-
-st.title("💵 Ứng dụng tính Thuế Thu nhập cá nhân -  Thanh Tru")
+# Tiêu đề
+st.title("💵 Ứng dụng tính Thuế Thu nhập cá nhân")
+st.subheader("Nguyễn Ngọc Thanh Trúc")
 
 # Nhập dữ liệu
 thu_nhap = st.number_input(
-    "Nhập thu nhập hàng tháng (triệu đồng)",
+    "Nhập tổng thu nhập hàng tháng (triệu đồng)",
     min_value=0.0,
     value=30.0
+)
+
+luong_bhxh = st.number_input(
+    "Nhập mức lương đóng BHXH (triệu đồng)",
+    min_value=0.0,
+    value=10.0
 )
 
 nguoi_phu_thuoc = st.number_input(
@@ -17,11 +23,10 @@ nguoi_phu_thuoc = st.number_input(
     value=0
 )
 
-# Nút tính toán
 if st.button("Tính thuế"):
 
-    # Bảo hiểm bắt buộc
-    bao_hiem = thu_nhap * 0.105
+    # Bảo hiểm người lao động đóng
+    bao_hiem = luong_bhxh * 0.105
 
     # Giảm trừ gia cảnh
     giam_tru_ban_than = 15.5
@@ -38,7 +43,7 @@ if st.button("Tính thuế"):
     if thu_nhap_tinh_thue < 0:
         thu_nhap_tinh_thue = 0
 
-    # Tính thuế lũy tiến từng phần
+    # Thuế TNCN lũy tiến từng phần
     if thu_nhap_tinh_thue <= 10:
         thue = thu_nhap_tinh_thue * 0.05
 
@@ -72,14 +77,17 @@ if st.button("Tính thuế"):
             + (thu_nhap_tinh_thue - 100) * 0.35
         )
 
-    # Lương thực nhận
-    luong_net = thu_nhap - bao_hiem - thue
+    # Thu nhập thực nhận
+    thu_nhap_net = thu_nhap - bao_hiem - thue
 
-    # Hiển thị kết quả
+    # Kết quả
     st.success("KẾT QUẢ TÍNH TOÁN")
 
+    st.write(f"📌 Tổng thu nhập: {thu_nhap:.2f} triệu đồng")
+    st.write(f"📌 Mức lương đóng BHXH: {luong_bhxh:.2f} triệu đồng")
+
     st.write(
-        f"📌 Bảo hiểm bắt buộc (10,5%): {bao_hiem:.2f} triệu đồng"
+        f"📌 Bảo hiểm người lao động (10,5%): {bao_hiem:.2f} triệu đồng"
     )
 
     st.write(
@@ -99,5 +107,5 @@ if st.button("Tính thuế"):
     )
 
     st.write(
-        f"📌 Lương thực nhận (NET): {luong_net:.2f} triệu đồng"
+        f"📌 Thu nhập thực nhận (NET): {thu_nhap_net:.2f} triệu đồng"
     )
