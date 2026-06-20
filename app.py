@@ -103,7 +103,7 @@ if st.button("Tính thuế"):
     )
 
     st.write(
-        f"📌 Thuế TNCN phải nộp: {thue:.2f} triệu đồng"
+    f"📌 Thuế TNCN phải nộp: {thue} triệu đồng"
     )
 
     st.write(
